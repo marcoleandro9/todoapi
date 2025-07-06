@@ -1,4 +1,4 @@
-package org.storehq.todoapi.module.task.test;
+package org.storehq.todoapi.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
