@@ -19,7 +19,11 @@ public class TaskController {
 
     @GetMapping
     public List<Task> getAllTasks() {
-        return taskService.getAllTasks();
+        List<Task> tasks = taskService.getAllTasks();
+        if (tasks == null || tasks.isEmpty()) {
+            throw new ResourceNotFoundException("No se encontraron tareas registradas");
+        }
+        return tasks;
     }
 
     @GetMapping("/{id}")
@@ -33,14 +37,18 @@ public class TaskController {
 
     @PostMapping
     public Task addTask(@Valid @RequestBody TaskRequestDTO taskRequest) {
-        return taskService.addTask(taskRequest);
+        Task createdTask = taskService.addTask(taskRequest);
+        if (createdTask == null) {
+            throw new RuntimeException("Error al crear la tarea");
+        }
+        return createdTask;
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public Task updateTask(@PathVariable int id, @Valid @RequestBody TaskRequestDTO taskRequest) {
         Task updated = taskService.updateTask(id, taskRequest);
         if (updated == null) {
-            throw new ResourceNotFoundException("Tarea con ID " + id + " no encontrada");
+            throw new ResourceNotFoundException("No se puede actualizar. Tarea con ID " + id + " no encontrada");
         }
         return updated;
     }
@@ -49,7 +57,7 @@ public class TaskController {
     public void deleteTask(@PathVariable int id) {
         boolean deleted = taskService.deleteTask(id);
         if (!deleted) {
-            throw new ResourceNotFoundException("Tarea con ID " + id + " no encontrada");
+            throw new ResourceNotFoundException("No se puede eliminar. Tarea con ID " + id + " no encontrada");
         }
     }
 }
