@@ -69,7 +69,7 @@ http://localhost:8080/h2-console
 **Credentials:**
 - JDBC URL : jdbc:h2:mem:tasksdb
 - User : sa
-## Execution
+## ✅ Execution
 
 This project was developed in IntelliJ IDEA. To run it from the command line, navigate to the project's root path and use the following commands:
 ```plaintext
